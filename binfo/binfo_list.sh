@@ -26,7 +26,7 @@ LIST_BINFO_FILE_BASENAME=(
     "012_01_rocdbgapi.binfo"
     "012_02_rocgdb.binfo"
     "013_01_rocm_smi_lib.binfo"
-    "013_02_amdsmi.binfo"
+    #"013_02_amdsmi.binfo"
     "013_03_nvtop.binfo"
     "014_01_hwloc.binfo"
     "014_02_boost.binfo"
