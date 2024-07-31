@@ -1,0 +1,25 @@
+From 104d0c45eaef782f9e3fe6874082a1530b4c9f06 Mon Sep 17 00:00:00 2001
+From: Chen Yufei <cyfdecyf@gmail.com>
+Date: Thu, 1 Aug 2024 00:31:59 +0800
+Subject: [PATCH] Remove -m64 compiler option.
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 7ef71be..bd0c231 100755
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -137,7 +137,7 @@ set(ROCMINFO_CXX_FLAGS ${ROCMINFO_CXX_FLAGS} -fmerge-all-constants)
+ set(ROCMINFO_CXX_FLAGS ${ROCMINFO_CXX_FLAGS} -fms-extensions)
+ set(ROCMINFO_CXX_FLAGS ${ROCMINFO_CXX_FLAGS} -Werror)
+ set(ROCMINFO_CXX_FLAGS ${ROCMINFO_CXX_FLAGS} -Wall)
+-set(ROCMINFO_CXX_FLAGS ${ROCMINFO_CXX_FLAGS} -m64)
++#set(ROCMINFO_CXX_FLAGS ${ROCMINFO_CXX_FLAGS} -m64)
+ 
+ #
+ # Extend the compiler flags for 64-bit builds
+-- 
+2.34.1
+
