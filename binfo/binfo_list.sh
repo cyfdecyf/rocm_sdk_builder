@@ -21,7 +21,7 @@ LIST_BINFO_FILE_BASENAME=(
     "009_04_hipcc_clr.binfo"
     "010_01_rocPRIM.binfo"
     "010_02_rocthrust.binfo"
-    "011_01_rocprofiler.binfo"
+    #"011_01_rocprofiler.binfo"
     "011_02_roctracer.binfo"
     "012_01_rocdbgapi.binfo"
     "012_02_rocgdb.binfo"
