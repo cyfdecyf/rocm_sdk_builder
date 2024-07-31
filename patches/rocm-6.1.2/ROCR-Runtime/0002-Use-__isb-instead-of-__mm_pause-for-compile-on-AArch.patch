@@ -1,0 +1,29 @@
+From b54a826cfbacb6627233c5477d725b524a787b9a Mon Sep 17 00:00:00 2001
+From: Chen Yufei <cyfdecyf@gmail.com>
+Date: Thu, 1 Aug 2024 00:10:50 +0800
+Subject: [PATCH 2/2] Use __isb() instead of __mm_pause() for compile on
+ AArch64.
+
+---
+ src/core/util/locks.h | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/core/util/locks.h b/src/core/util/locks.h
+index 6c0de49..f2cc766 100644
+--- a/src/core/util/locks.h
++++ b/src/core/util/locks.h
+@@ -72,7 +72,11 @@ class HybridMutex {
+     while (!lock_.compare_exchange_strong(old, 1)) {
+       cnt--;
+       if (cnt > maxSpinIterPause) {
++#if defined(__ARM_ARCH)
++        //__builtin_arm_isb(15);
++#else
+         _mm_pause();
++#endif
+       } else if (cnt-- > maxSpinIterYield) {
+         os::YieldThread();
+       } else {
+-- 
+2.34.1
+
