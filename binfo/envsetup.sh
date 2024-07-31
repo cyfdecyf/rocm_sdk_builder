@@ -13,7 +13,7 @@ source binfo/user_config.sh
 source ../envsetup_pre.sh
 
 # check the linux distribution for the target triplet
-export ROCM_TARGET_TRIPLED=x86_64-rocm-linux-gnu
+export ROCM_TARGET_TRIPLED=aarch64-rocm-linux-gnu
 if [[ -e "/etc/os-release" ]]; then
     source /etc/os-release
 elif [[ -e "/etc/centos-release" ]]; then
