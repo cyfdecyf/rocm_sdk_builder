@@ -1,0 +1,96 @@
+From 0412a49c6e089273dfe92974a6f97d894afe21c5 Mon Sep 17 00:00:00 2001
+From: Chen Yufei <cyfdecyf@gmail.com>
+Date: Fri, 2 Aug 2024 23:02:07 +0800
+Subject: [PATCH] libpgmath: fix compile on AArch64.
+
+---
+ runtime/libpgmath/lib/aarch64/CMakeLists.txt | 1 -
+ runtime/libpgmath/lib/common/arm64intrin.h   | 4 ----
+ runtime/libpgmath/lib/common/p_dpowi.c       | 9 ---------
+ runtime/libpgmath/lib/common/quadmath.h      | 4 ++++
+ runtime/libpgmath/lib/generic/CMakeLists.txt | 3 +--
+ 5 files changed, 5 insertions(+), 16 deletions(-)
+
+diff --git a/runtime/libpgmath/lib/aarch64/CMakeLists.txt b/runtime/libpgmath/lib/aarch64/CMakeLists.txt
+index 6f1bb823a..4fe7cafa8 100644
+--- a/runtime/libpgmath/lib/aarch64/CMakeLists.txt
++++ b/runtime/libpgmath/lib/aarch64/CMakeLists.txt
+@@ -16,4 +16,3 @@ add_subdirectory("sin")
+ add_subdirectory("sinh")
+ add_subdirectory("tan")
+ add_subdirectory("tanh")
+-add_subdirectory("cotan")
+diff --git a/runtime/libpgmath/lib/common/arm64intrin.h b/runtime/libpgmath/lib/common/arm64intrin.h
+index d99a7be96..9c9a73170 100644
+--- a/runtime/libpgmath/lib/common/arm64intrin.h
++++ b/runtime/libpgmath/lib/common/arm64intrin.h
+@@ -26,10 +26,6 @@
+  */
+ 
+ struct __s128f {
+-	at (*fptr)(float);
+-	  fptr = (float(*)(float))MTH_DISPATCH_TBL[func_tan][sv_ss][frp_f];
+-	    return __ZGVxN4v__mth_i_vr4( x, fptr);
+-}
+   typedef float  vrs4_t __attribute__((vector_size(4 * sizeof(float))));
+   typedef double vrd2_t __attribute__((vector_size(2 * sizeof(double))));
+   union {
+diff --git a/runtime/libpgmath/lib/common/p_dpowi.c b/runtime/libpgmath/lib/common/p_dpowi.c
+index 796e31286..ce6f728af 100644
+--- a/runtime/libpgmath/lib/common/p_dpowi.c
++++ b/runtime/libpgmath/lib/common/p_dpowi.c
+@@ -16,15 +16,6 @@
+  * Most likely used with -Kieee (precise).
+  */
+ 
+-/*
+- * __float128 is not supported on all platforms so use GCC's long double
+- * as a temporary workaround to get higher precision multiplies.
+- */
+-
+-#if	defined (TARGET_LINUX_GENERIC) || defined (TARGET_LINUX_POWER) || defined (LINUX8664) || defined (TARGET_X8664) || defined(TARGET_LINUX_ARM64)
+-#define	__float128	long double
+-#endif
+-
+ double
+ __pmth_i_dpowk(double x8, long long i8)
+ {
+diff --git a/runtime/libpgmath/lib/common/quadmath.h b/runtime/libpgmath/lib/common/quadmath.h
+index 1555304c7..c5e0de15c 100644
+--- a/runtime/libpgmath/lib/common/quadmath.h
++++ b/runtime/libpgmath/lib/common/quadmath.h
+@@ -39,6 +39,10 @@ typedef _Complex float __attribute__((mode(TC))) __complex128;
+ # define __quadmath_nth(fct) __attribute__((__nothrow__)) fct
+ #endif
+ 
++#if defined(__ARM_ARCH)
++#  define __float128 long double
++#endif
++
+ /* Prototypes for real functions */
+ extern __float128 acosq (__float128) __quadmath_throw;
+ extern __float128 acoshq (__float128) __quadmath_throw;
+diff --git a/runtime/libpgmath/lib/generic/CMakeLists.txt b/runtime/libpgmath/lib/generic/CMakeLists.txt
+index 9c77cda9c..377896a78 100644
+--- a/runtime/libpgmath/lib/generic/CMakeLists.txt
++++ b/runtime/libpgmath/lib/generic/CMakeLists.txt
+@@ -56,7 +56,6 @@ set(GENERIC_SRCS
+   dsqrt.c
+   dtan.c
+   dcotan.c
+-  dcan.c
+   dtanh.c
+   exp.c
+   fabs.c
+@@ -66,7 +65,7 @@ set(GENERIC_SRCS
+   log.c
+   mthi64.c
+   nint.c
+-  qnint.c
++  #qnint.c
+   remainder.c
+   round.c
+   rpowr.c
+-- 
+2.34.1
+
