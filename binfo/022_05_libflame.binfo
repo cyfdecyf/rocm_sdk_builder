@@ -6,6 +6,7 @@ BINFO_APP_UPSTREAM_REPO_URL=https://github.com/flame/libflame
 BINFO_APP_UPSTREAM_REPO_VERSION_TAG=646ed9075cc45aeffb53632a3ec88defb423fefa
 
 BINFO_APP_CONFIG_CMD_ARRAY=(
+    "curl 'https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD' --output ${BINFO_APP_SRC_DIR}/build/ac-utils/config.guess"
     "cd ${BINFO_APP_BUILD_DIR}"
     "${BINFO_APP_SRC_DIR}/configure --prefix=${INSTALL_DIR_PREFIX_SDK_ROOT} --libdir=${INSTALL_DIR_PREFIX_SDK_ROOT}/lib64 "
 )
