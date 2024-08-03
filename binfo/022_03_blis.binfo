@@ -11,5 +11,5 @@ BINFO_APP_UPSTREAM_REPO_VERSION_TAG=1.0
 #  219 | GENTFUNC( dcomplex, z, gemv_unf_var2 )
 BINFO_APP_CONFIG_CMD_ARRAY=(
     "cd ${BINFO_APP_BUILD_DIR}"
-    "${BINFO_APP_SRC_DIR}/configure --prefix=${INSTALL_DIR_PREFIX_SDK_ROOT}/blis --libdir=${INSTALL_DIR_PREFIX_SDK_ROOT}/blis/lib64 --enable-cblas zen2"
+    "${BINFO_APP_SRC_DIR}/configure --prefix=${INSTALL_DIR_PREFIX_SDK_ROOT}/blis --libdir=${INSTALL_DIR_PREFIX_SDK_ROOT}/blis/lib64 --enable-cblas auto"
 )
